@@ -1,8 +1,7 @@
 fn main() {
-    let cash_flows = vec![2000.0, 2000.0, 2000.0, 2000.0];
-    let interest_rate = 0.06;
-
-    println!("Result: {}", present_value_stream_of_future_even_cash_flows(1000.0, 0.04, 13));
+    println!("Result: {}", present_value_stream_of_future_even_cash_flows(2000.0, 0.05, 4));
+    println!("Result: {}", present_value_stream_of_cash_flows(&vec![2000.0; 4], 0.05));
+    println!("Result: {}", loan_periodic_payments(37150.0, 0.0033, 60));
 
 }
 
@@ -25,6 +24,21 @@ fn future_value_stream_of_cash_flows(cash_flows: &Vec<f64>, interest_rate: f64) 
     }
 
     result
+}
+
+fn present_value_stream_of_cash_flows(cash_flows: &Vec<f64>, interest_rate: f64) -> f64 {
+    let mut result = 0.0;
+    let mut time = cash_flows.len();
+    for cash in cash_flows {
+        result += cash / (1.0 + interest_rate).powi(time as i32);
+        time -= 1;
+    }
+
+    result
+}
+
+fn loan_periodic_payments(loan_value: f64, interest_rate: f64, time_unit: u16) -> f64 {
+    loan_value / annuity_discount_factor(interest_rate, time_unit)
 }
 
 fn future_value_stream_of_even_cash_flows(cash: f64, interest_rate: f64, time_unit: u16) -> f64 {
@@ -81,6 +95,12 @@ mod tests {
     #[test]
     fn test_present_value_stream_of_even_cash_flows() {
         assert_eq!(8973.858979663244, present_value_stream_of_even_cash_flows(1000000.0, 0.06, 35));
+
+    }
+
+    #[test]
+    fn test_loan_periodic_payments() {
+        assert_eq!(683.5034039047295, loan_periodic_payments(37150.0, 0.0033, 60));
 
     }
 }
