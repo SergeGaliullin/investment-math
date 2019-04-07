@@ -121,7 +121,11 @@ mod tests {
     #[test]
     fn test_loan_periodic_payments() {
         assert_eq!(683.5034039047295, loan_periodic_payments(37150.0, 0.0033, 60));
+    }
 
+    #[test]
+    fn test_convert_year_to_monthly_rate() {
+        assert_eq!(0.004166666666666667, convert_year_to_monthly_rate(5.0));
     }
 }
 
