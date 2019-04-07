@@ -1,8 +1,28 @@
 fn main() {
-    println!("Result: {}", present_value_stream_of_future_even_cash_flows(2000.0, 0.05, 4));
-    println!("Result: {}", present_value_stream_of_cash_flows(&vec![2000.0; 4], 0.05));
-    println!("Result: {}", loan_periodic_payments(37150.0, 0.0033, 60));
+//    let cash_flows = 3000.0;
+//    let months: usize = 120;
+//    let mut interest_rate = 0.001;
+//    let desirable_amount = 500000.0;
+//
+//    loop {
+//        interest_rate += 0.0001;
+//        let result = future_value_stream_of_cash_flows(&vec![cash_flows; months], interest_rate);
+//        if result > desirable_amount {
+//            println!("Monthly cash: {}", cash_flows);
+//            println!("Months: {}", months);
+//            println!("Interest rate: {} %", interest_rate * 100.0 * 12.0);
+//            break;
+//        }
+//    }
+    let cash_flows = 2000.0;
+    let months: usize = 120;
+    println!("Result: {}", future_value_stream_of_cash_flows(&vec![cash_flows; months], convert_year_to_monthly_rate(12.0)));
 
+
+}
+
+fn convert_year_to_monthly_rate(year_percentage: f64) -> f64 {
+    (year_percentage / 12.0) / 100.0
 }
 
 
