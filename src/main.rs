@@ -1,19 +1,19 @@
 fn main() {
-//    let cash_flows = 3000.0;
-//    let months: usize = 120;
-//    let mut interest_rate = 0.001;
-//    let desirable_amount = 500000.0;
-//
-//    loop {
-//        interest_rate += 0.0001;
-//        let result = future_value_stream_of_cash_flows(&vec![cash_flows; months], interest_rate);
-//        if result > desirable_amount {
-//            println!("Monthly cash: {}", cash_flows);
-//            println!("Months: {}", months);
-//            println!("Interest rate: {} %", interest_rate * 100.0 * 12.0);
-//            break;
-//        }
-//    }
+    let cash_flows = 3000.0;
+    let months: usize = 120;
+    let mut interest_rate = 0.001;
+    let desirable_amount = 500000.0;
+
+    loop {
+        interest_rate += 0.0001;
+        let result = future_value_stream_of_cash_flows(&vec![cash_flows; months], interest_rate);
+        if result > desirable_amount {
+            println!("Monthly cash: {}", cash_flows);
+            println!("Months: {}", months);
+            println!("Interest rate: {} %", interest_rate * 100.0 * 12.0);
+            break;
+        }
+    }
     let cash_flows = 2000.0;
     let months: usize = 120;
     println!("Result: {}", future_value_stream_of_cash_flows(&vec![cash_flows; months], convert_year_to_monthly_rate(12.0)));
@@ -25,22 +25,13 @@ fn convert_year_to_monthly_rate(year_percentage: f64) -> f64 {
 
 fn interest_rate(cash_flows: f64, months: u16, desirable_amount: f64) -> f64 {
     let mut rate = 0.0;
-    let result = future_value_stream_of_cash_flows(&vec![cash_flows; months as usize], rate);
-    while result < desirable_amount {
+    loop {
         rate += 0.0001;
         let result = future_value_stream_of_cash_flows(&vec![cash_flows; months as usize], rate);
+        if result > desirable_amount {
+            return rate * 100.0 * 12.0
+        }
     }
-    result
-//    loop {
-//        interest_rate += 0.0001;
-//        let result = future_value_stream_of_cash_flows(&vec![cash_flows; months as usize], rate);
-//        if result > desirable_amount {
-//            println!("Monthly cash: {}", cash_flows);
-//            println!("Months: {}", months);
-//            println!("Interest rate: {} %", interest_rate * 100.0 * 12.0);
-//            result
-//        }
-//    }
 }
 
 
@@ -142,6 +133,11 @@ mod tests {
     #[test]
     fn test_convert_year_to_monthly_rate() {
         assert_eq!(0.004166666666666667, convert_year_to_monthly_rate(5.0));
+    }
+
+        #[test]
+    fn test_interest_rate() {
+        assert_eq!(6.360000000000001, interest_rate(3000.0, 120, 500000.0));
     }
 }
 
