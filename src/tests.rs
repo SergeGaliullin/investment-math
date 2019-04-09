@@ -4,7 +4,24 @@ mod tests {
 
     #[test]
     fn test_effective_annual_rate() {
-        assert_eq!(4.032670515423953, effective_annual_rate(4.0, 12))
+        // 12 months (periods), compounded each month
+        assert_eq!(4.032670515423953, effective_annual_rate(4.0, 12, 12.0));
+        // 12 months (periods), compounded each 2 months
+        assert_eq!(0.6610890000000147, effective_annual_rate(4.0, 12, 2.0));
+        // 12 months (periods), compounded each 3 months
+        assert_eq!(0.9932705937000241, effective_annual_rate(4.0, 12, 3.0));
+        // 12 months (periods), compounded each 6 months
+        assert_eq!(1.9964070521231392, effective_annual_rate(4.0, 12, 6.0));
+        // 12 months (periods), compounded each 18 months
+        assert_eq!(6.1095860861059, effective_annual_rate(4.0, 12, 18.0));
+        // 6 months, compounded semi-annually (2 periods)
+        assert_eq!(6.089999999999995, effective_annual_rate(6.0, 2, 12.0/6.0));
+        // 3 months, compounded semi-annually (2 periods)
+        assert_eq!(1.4889156509221957, effective_annual_rate(6.0, 2, 3.0/6.0));
+        // 24 months, compounded semi-annually (2 periods)
+        assert_eq!(12.550881000000015, effective_annual_rate(6.0, 2, 24.0/6.0));
+        // 15 months, compounded semi-annually (2 periods)
+        assert_eq!(7.66959061406336, effective_annual_rate(6.0, 2, 15.0/6.0));
     }
 
     #[test]
@@ -48,7 +65,8 @@ mod tests {
     }
 
     #[test]
-    fn test_interest_rate() {
+    fn test_interest_rate()
+    {
         assert_eq!(6.360000000000001, interest_rate(3000.0, 120, 500000.0));
     }
 }

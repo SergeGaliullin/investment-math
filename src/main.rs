@@ -1,26 +1,7 @@
 mod tests;
 
 fn main() {
-//    let cash_flows = 3000.0;
-//    let months: usize = 120;
-//    let mut interest_rate = 0.001;
-//    let desirable_amount = 500000.0;
-//
-//    loop {
-//        interest_rate += 0.0001;
-//        let result = future_value_stream_of_cash_flows(&vec![cash_flows; months], interest_rate);
-//        if result > desirable_amount {
-//            println!("Monthly cash: {}", cash_flows);
-//            println!("Months: {}", months);
-//            println!("Interest rate: {} %", interest_rate * 100.0 * 12.0);
-//            break;
-//        }
-//    }
-//    let cash_flows = 2000.0;
-//    let months: usize = 120;
-//    println!("Result: {}", future_value_stream_of_cash_flows(&vec![cash_flows; months], convert_year_to_monthly_rate(12.0)));
-
-    println!("Result: {}", effective_annual_rate2(8.0, 2));
+    println!("Result: {}", effective_annual_rate(6.0, 2, 2.0));
 }
 
 fn convert_year_to_monthly_rate(year_percentage: f64) -> f64 {
@@ -93,17 +74,11 @@ fn present_value_stream_of_future_even_cash_flows(cash: f64, interest_rate: f64,
     cash * annuity_discount_factor(interest_rate, time_unit)
 }
 
-pub fn effective_annual_rate(stated_annual_rate: f64, times_compounded: u16) -> f64 {
-    let monthly_interest_rate = ((stated_annual_rate / 12.0 as f64 / 100.0) * 10000.0).round() / 10000.0;
-    println!("Monthly interest rate: {}", monthly_interest_rate);
-    ((1.0 + monthly_interest_rate).powi(times_compounded as i32) - 1.0) * 100.0
+fn effective_annual_rate(stated_annual_rate: f64, periods: u16, times_compounded: f64) -> f64 {
+    let monthly_interest_rate = ((stated_annual_rate / periods as f64 / 100.0) * 10000.0).round() / 10000.0;
+    ((1.0 + monthly_interest_rate).powf(times_compounded) - 1.0) * 100.0
 }
 
-fn effective_annual_rate2(stated_annual_rate: f64, times_compounded: u16) -> f64 {
-    let monthly_interest_rate = ((stated_annual_rate / times_compounded as f64 / 100.0) * 10000.0).round() / 10000.0;
-    println!("Monthly interest rate: {}", monthly_interest_rate);
-    ((1.0 + monthly_interest_rate).powi(times_compounded as i32) - 1.0) * 100.0
-}
 
 
 
