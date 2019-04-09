@@ -58,7 +58,11 @@ fn future_value_stream_of_even_cash_flows(cash: f64, interest_rate: f64, time_un
     cash * annuity_compound_factor(interest_rate, time_unit)
 }
 
-fn present_value_stream_of_even_cash_flows(final_cash: f64, interest_rate: f64, time_unit: u16) -> f64 {
+fn present_value_stream_of_even_cash_flows(
+    final_cash: f64,
+    interest_rate: f64,
+    time_unit: u16,
+) -> f64 {
     final_cash / annuity_compound_factor(interest_rate, time_unit)
 }
 
@@ -70,15 +74,20 @@ fn annuity_discount_factor(interest_rate: f64, time_unit: u16) -> f64 {
     (1.0 - (1.0 / (1.0 + interest_rate).powi(time_unit as i32))) / interest_rate
 }
 
-fn present_value_stream_of_future_even_cash_flows(cash: f64, interest_rate: f64, time_unit: u16) -> f64 {
+fn present_value_stream_of_future_even_cash_flows(
+    cash: f64,
+    interest_rate: f64,
+    time_unit: u16,
+) -> f64 {
     cash * annuity_discount_factor(interest_rate, time_unit)
 }
 
 fn effective_annual_rate(stated_annual_rate: f64, periods: u16, times_compounded: f64) -> f64 {
-    let monthly_interest_rate = ((stated_annual_rate / periods as f64 / 100.0) * 10000.0).round() / 10000.0;
+    let monthly_interest_rate =
+        ((stated_annual_rate / periods as f64 / 100.0) * 10000.0).round() / 10000.0;
     ((1.0 + monthly_interest_rate).powf(times_compounded) - 1.0) * 100.0
 }
 
-
-
-
+fn perpetuity_with_growth_rate(cash_flow: f64, percentage: f64, growth_rate: f64) -> f64 {
+    cash_flow / (percentage - growth_rate)
+}
