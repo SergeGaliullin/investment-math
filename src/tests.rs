@@ -83,4 +83,9 @@ mod tests {
     fn test_perpetuity_with_growth_rate() {
         assert_eq!(20000.0, perpetuity_with_growth_rate(1000.0, 0.10, 0.05));
     }
+
+    #[test]
+    fn test_growing_annuity_discount() {
+        assert_eq!(4.379473795950539, growing_annuity_discount(0.05, 0.08, 5.0));
+    }
 }

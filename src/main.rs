@@ -91,3 +91,13 @@ fn effective_annual_rate(stated_annual_rate: f64, periods: u16, times_compounded
 fn perpetuity_with_growth_rate(cash_flow: f64, percentage: f64, growth_rate: f64) -> f64 {
     cash_flow / (percentage - growth_rate)
 }
+
+fn growing_annuity_discount(growth_rate: f64, stated_rate: f64 ,times_compounded: f64) -> f64 {
+    println!("(1 + g) n = {}", (1.0 + growth_rate).powf(times_compounded));
+    println!("(1 + r) n = {}", (1.0 + stated_rate).powf(times_compounded));
+    println!("(1 + g) n / (1 + r) n = {}", ((1.0 + growth_rate).powf(times_compounded) / (1.0 + stated_rate).powf(times_compounded)));
+    println!("1 - ((1 + g) n / (1 + r) n) = {}", (1.0 - ((1.0 + growth_rate).powf(times_compounded) / (1.0 + stated_rate).powf(times_compounded))));
+    println!("r - g = {}", stated_rate - growth_rate);
+    println!("Result = {}", (1.0 - ((1.0 + growth_rate).powf(times_compounded) / (1.0 + stated_rate).powf(times_compounded))) / (stated_rate - growth_rate));
+    (1.0 - ((1.0 + growth_rate).powf(times_compounded) / (1.0 + stated_rate).powf(times_compounded))) / (stated_rate - growth_rate)
+}
